@@ -1,20 +1,3 @@
-# Copyright (c) 2021 caoccao.com Sam Cao
-# All rights reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-# Usage: docker build -t sjtucaocao/javet-android:3.0.1 -f docker/android/base.Dockerfile .
-
 FROM ubuntu:20.04
 WORKDIR /
 
@@ -87,7 +70,7 @@ RUN ninja -C out.gn/x64.release v8_monolith
 RUN rm patch_v8_build.py
 RUN echo V8 build is completed.
 
-# Prepare Javet Build Environment
+# Prepare  Build Environment
 RUN apt-get install --upgrade -qq -y --no-install-recommends openjdk-11-jdk
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
@@ -104,14 +87,6 @@ RUN apt-get clean -y
 RUN rm -rf /var/lib/apt/lists/*
 WORKDIR /
 
-# Pre-cache Dependencies
-RUN mkdir Javet
-WORKDIR /Javet
-COPY . .
-WORKDIR /Javet/android
-RUN gradle dependencies
-WORKDIR /
-RUN rm -rf /Javet
 
 # Completed
-RUN echo Javet Android build base image is completed.
+RUN echo  Android build base image is completed.
