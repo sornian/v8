@@ -1,0 +1,24 @@
+name: Android Build
+
+on:
+  push:
+   
+
+env:
+  DOCKERHUB_USERNAME: sornian
+
+jobs:
+  v8_node:
+    name: Publish container image with V8 source and binaries
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Build docker image
+        run: |
+          docker build  -f android.Dockerfile .
+      - name: Publish the docker image
+        run: |
+          docker login --username ${{ env.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+          docker push sornian/v8
